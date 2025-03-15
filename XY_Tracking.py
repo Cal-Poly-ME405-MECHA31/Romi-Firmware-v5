@@ -8,6 +8,8 @@ import task_share
 import cotask
 import math
 
+## The XY_Tracking class is run as a task and continuously integrates encoder displacement based on current IMU heading to approximate 
+#  overall X,Y position on the game course
 class XY_Tracking:
 
 	def __init__(self, encoderPosition, dataQueue, ctrlState, heading, calibrated, xPosition, yPosition):
@@ -29,6 +31,7 @@ class XY_Tracking:
 
 		self.state = 0
 
+	## run() runs the next state of the state machine.  It is intended to be called by the scheduler with a period of 20ms.
 	def run(self):
 
 		while True:
@@ -92,3 +95,15 @@ class XY_Tracking:
 				self.state = 0
 
 			yield self.state
+
+	## @var state
+    #  Next state to be run by the state machine.  0 = initialization, 1 = waiting, 2 = tracking
+
+    ## @var prevPosition
+    # List of encoder position at the last call to run, to determine the displacement since then
+
+    ## @var startHeading
+    #  Heading as recorded by the IMU at the start of the course
+
+    ## @var timeStamp
+    #  Time stamp for sending periodic data updates over bluetooth

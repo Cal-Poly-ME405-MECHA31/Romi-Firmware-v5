@@ -145,7 +145,7 @@ class Controller:
 				if self.ctrlState.get() != 4:
 					self.state = Controller.WAIT
 
-				if (self.encoderPosition[0].get() - self.startPosition > 7000) or ((self.strength.get() > 35) and (self.encoderPosition[0].get() - self.startPosition > 6000)): # follow the line until strength rises above the limit
+				if (self.encoderPosition[0].get() - self.startPosition > 6500) or ((self.strength.get() > 30) and (self.encoderPosition[0].get() - self.startPosition > 5500)): # follow the line until strength rises above the limit
 					self.targetVelocity[0].put(0)
 					self.targetVelocity[1].put(0)
 
@@ -177,7 +177,7 @@ class Controller:
 				if self.ctrlState.get() != 4:
 					self.state = Controller.WAIT
 
-				targetHeading = self.startHeading + 90
+				targetHeading = self.startHeading + 88
 				if targetHeading > 360:
 					targetHeading -= 360
 
@@ -187,7 +187,7 @@ class Controller:
 				elif error > 180:
 					error -= 360
 
-				if abs(error) < 3: # if heading is within tolerance, move to next state
+				if abs(error) < 4: # if heading is within tolerance, move to next state
 					self.linePID.zero()
 					self.linePID.setTimeStamp()
 
@@ -213,7 +213,7 @@ class Controller:
 				if self.ctrlState.get() != 4:
 					self.state = Controller.WAIT
 
-				if (self.strength.get() > 5) and (self.strength.get() < 30) and (ticks_diff(ticks_us(), self.timeStamp) > 1000000):
+				if (self.strength.get() > 5) and (self.strength.get() < 30) and (ticks_diff(ticks_us(), self.timeStamp) > 750000):
 
 					self.targetVelocity[0].put(0)
 					self.targetVelocity[1].put(0)
@@ -231,8 +231,8 @@ class Controller:
 
 				if ticks_diff(ticks_us(), self.timeStamp) < 3000000:
 
-					self.targetVelocity[0].put(1000)
-					self.targetVelocity[1].put(1000)
+					self.targetVelocity[0].put(1200)
+					self.targetVelocity[1].put(1200)
 
 				else:
 
@@ -337,8 +337,8 @@ class Controller:
 
 				else:
 
-					self.targetVelocity[0].put(1000)
-					self.targetVelocity[1].put(1000)
+					self.targetVelocity[0].put(1200)
+					self.targetVelocity[1].put(1200)
 
 			elif self.state == Controller.LINE_3: # follow the line until the pillars
 
@@ -363,18 +363,16 @@ class Controller:
 						self.targetVelocity[0].put(self.lineSpeed.get() - yawSpeed)
 						self.targetVelocity[1].put(self.lineSpeed.get() + yawSpeed)
 
-				elif (self.encoderPosition[0].get() - self.startPosition) < 12500:
+				elif (self.encoderPosition[0].get() - self.startPosition) < 13500:
 
 					if self.strength.get() < 10:
 
-						self.startPosition = self.encoderPosition[0].get()
-
-						self.state = Controller.OFFSET
-						self.log(self.state)
+						self.targetVelocity[0].put(-500)
+						self.targetVelocity[1].put(-500)
 
 					else:
 
-						if self.strength.get() < 30:
+						if self.strength.get() < 40:
 
 							self.linePID.setPID(self.kPShare.get(), self.kIShare.get(), self.kDShare.get())
 
@@ -402,7 +400,7 @@ class Controller:
 
 				else:
 
-					if self.strength.get() < 15:
+					if ((self.encoderPosition[0].get() - self.startPosition) < 15000) and (self.strength.get() < 10):
 
 						self.startPosition = self.encoderPosition[0].get()
 
@@ -443,7 +441,7 @@ class Controller:
 				if self.ctrlState.get() != 4:
 					self.state = Controller.WAIT
 
-				targetHeading = self.startHeading - 179
+				targetHeading = self.startHeading - 177
 				if targetHeading < 360:
 					targetHeading += 360
 
@@ -473,7 +471,7 @@ class Controller:
 				if self.ctrlState.get() != 4:
 					self.state = Controller.WAIT
 				
-				if (self.encoderPosition[0].get() - self.startPosition) > 4050:
+				if (self.encoderPosition[0].get() - self.startPosition) > 4000:
 					self.headingPID.zero()
 					self.headingPID.setTimeStamp()
 
@@ -482,7 +480,7 @@ class Controller:
 
 				else:
 
-					targetHeading = self.startHeading - 180
+					targetHeading = self.startHeading - 177
 					if targetHeading < 360:
 						targetHeading += 360
 
@@ -494,8 +492,8 @@ class Controller:
 
 					yawSpeed = self.headingPID.calculate(error)
 
-					self.targetVelocity[0].put(500 - yawSpeed)
-					self.targetVelocity[1].put(500 + yawSpeed)
+					self.targetVelocity[0].put(1000 - yawSpeed)
+					self.targetVelocity[1].put(1000 + yawSpeed)
 
 			elif self.state == Controller.ALIGN_LINE_4: # align with the line
 
@@ -516,10 +514,10 @@ class Controller:
 
 				if abs(error) < 5:
 
-					self.kPShare.put(3)
+					self.kPShare.put(4)
 					self.kIShare.put(0)
 					self.kDShare.put(0)
-					self.lineSpeed.put(1000)
+					self.lineSpeed.put(1200)
 
 					self.timeStamp = ticks_us()
 
@@ -553,8 +551,8 @@ class Controller:
 
 					if self.strength.get() < 10:
 
-						self.targetVelocity[0].put(500)
-						self.targetVelocity[1].put(500)
+						self.targetVelocity[0].put(800)
+						self.targetVelocity[1].put(800)
 
 					else:
 
@@ -602,7 +600,7 @@ class Controller:
 
 				# self.log(self.distance[1].get())
 
-				if ((self.distance[1].get() > 5000) and (ticks_diff(ticks_us(), self.timeStamp) > 1500000) or (ticks_diff(ticks_us(), self.timeStamp) > 2000000)):
+				if ((self.distance[1].get() > 5000) and (ticks_diff(ticks_us(), self.timeStamp) > 750000) or (ticks_diff(ticks_us(), self.timeStamp) > 1000000)):
 
 					self.startPosition = self.encoderPosition[0].get()
 
@@ -611,8 +609,8 @@ class Controller:
 
 				else:
 
-					self.targetVelocity[0].put(800)
-					self.targetVelocity[1].put(800)
+					self.targetVelocity[0].put(1500)
+					self.targetVelocity[1].put(1500)
 
 			elif self.state == Controller.ALONG_WALL_2: # drive just past the wall
 
@@ -631,8 +629,8 @@ class Controller:
 
 				else:
 
-					self.targetVelocity[0].put(800)
-					self.targetVelocity[1].put(800)
+					self.targetVelocity[0].put(1500)
+					self.targetVelocity[1].put(1500)
 
 			elif self.state == Controller.ALIGN_WALL_2: # align with the wall
 
@@ -680,8 +678,8 @@ class Controller:
 
 				else:
 
-					self.targetVelocity[0].put(800)
-					self.targetVelocity[1].put(800)
+					self.targetVelocity[0].put(1500)
+					self.targetVelocity[1].put(1500)
 
 			elif self.state == Controller.PAST_WALL_2:
 
@@ -690,7 +688,7 @@ class Controller:
 				if self.ctrlState.get() != 4:
 					self.state = Controller.WAIT
 
-				if (self.encoderPosition[0].get() - self.startPosition) > 500:
+				if (self.encoderPosition[0].get() - self.startPosition) > 300:
 
 					self.headingPID.zero()
 					self.headingPID.setTimeStamp()
@@ -700,8 +698,8 @@ class Controller:
 
 				else:
 
-					self.targetVelocity[0].put(800)
-					self.targetVelocity[1].put(800)
+					self.targetVelocity[0].put(1500)
+					self.targetVelocity[1].put(1500)
 
 
 			elif self.state == Controller.ALIGN_LINE_5: # align with the line
@@ -731,6 +729,8 @@ class Controller:
 					self.kDShare.put(0)
 					self.lineSpeed.put(1000)
 
+					self.timeStamp = ticks_us()
+
 					self.state = Controller.LINE_5
 					self.log(self.state)
 
@@ -747,7 +747,8 @@ class Controller:
 				if self.ctrlState.get() != 4:
 					self.state = Controller.WAIT
 
-				if self.strength.get() < 10:
+				#if (self.strength.get() < 10) or ((abs(xPosition.get()) < 0.01) and (abs(yPosition.get() < 0.01))):
+				if ((self.strength.get() < 10) and (ticks_diff(ticks_us(), self.timeStamp) > 1000000) or (ticks_diff(ticks_us(), self.timeStamp) > 2000000)):
 
 					self.headingPID.zero()
 					self.headingPID.setTimeStamp()

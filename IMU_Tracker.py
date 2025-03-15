@@ -1,4 +1,4 @@
-# import micropython
+import micropython
 from time import ticks_us, ticks_diff
 from pyb import Pin, Timer, UART, ExtInt, I2C
 from array import array
@@ -8,12 +8,19 @@ import struct
 
 from PID import PID
 
+## The IMU_Tracker class provides a driver to track the heading as calculated by the BNO055 IMU.  The class waits for a succcessful calibration of the IMU,
+#  then begins regularly reading the heading over I2C
 class IMU_Tracker:
 
+	## Recommended K_P value for PID control of heading
 	K_P = 20
+	## Recommended K_I value for PID control of heading
 	K_I = 2
+	## Recommended K_D value for PID control of heading
 	K_D = 0
-	INTEGRAL_SPEED = 100 # maximum speed that the integral term can grow to
+	## Recommended maximum integral speed for PID control of heading
+	INTEGRAL_SPEED = 100
+	## Recommended number of derivative values to average over time for PID control of heading
 	DER_AVE = 10
 
 	def __init__(self, dataQueue, ctrlState, targetVelocity, heading, calibrated):
@@ -30,6 +37,7 @@ class IMU_Tracker:
 
 		self.state = 0
 
+	## run() runs the next state of the state machine.  It is intended to be called by the scheduler with a period of 20ms.
 	def run(self):
 
 		while True:
@@ -88,3 +96,15 @@ class IMU_Tracker:
 				self.state = 0
 
 			yield self.state
+
+	## @var state
+    #  Next state to be run by the state machine.  0 = initialization, 1 = waiting for calibration, 2 = sensing, 3 = north tracking mode
+
+    ## @var imu
+    #  I2C object for communication with the IMU
+
+    ## @var address
+    #  I2C address of the IMU
+
+    ## @var PID
+    #  PID object for controlling yaw speed for North tracking mode

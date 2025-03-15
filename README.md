@@ -7,22 +7,28 @@ The following content documents our completion of Cal Poly's ME405 Mechatronics 
  instructor.  Over the course of the last several months, we have wired up the machine, installed IR, ultrasonic, and 
  IMU sensors, and programmed it with python firmware capable of reliably completing the obstacle course.
 
+ A video of our robot completing the course is included below:
+
+\htmlonly
+<iframe width="560" height="315" src="https://www.youtube.com/embed/644qalbS5Qk?si=99lT6oUaL8Q2IfnB" title="YouTube video player" allowfullscreen></iframe>
+\endhtmlonly
+
 We have two goals with this page.  First, we wish to provide a high-level overview of the code structure, with quick 
  navigation to anywhere in the project.  Second, here we will include some of the notable features of our software.
 
 ### Links to Each 11 Classes:
 
-1. Main.py: [class](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/class_m_e405_01_term_01_project_01v5_1_1_main.html) | [source](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/_m_e405_01_term_01_project_01v5_8py_source.html)
-2. Com Task: [class](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/class_com___task_1_1_com___task.html) | [source](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/_com___task_8py_source.html)
-3. Controller: [class](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/class_controller_1_1_controller.html) | [source](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/_controller_8py_source.html)
-4. PID: [class](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/class_p_i_d_1_1_p_i_d.html) | [source](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/_p_i_d_8py_source.html)
-5. Motor: [class](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/class_motor_1_1_motor.html) | [source](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/_motor_8py_source.html)
-6. Encoder: [class](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/class_encoder_1_1_encoder.html) | [source](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/_encoder_8py_source.html)
-7. Motor Controller: [class](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/class_motor___task_1_1_motor___task.html) | [source](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/_motor___task_8py_source.html)
-8. IR Driver: [class](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/class_i_r___sense___task_1_1_i_r___sense___task.html) | [source](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/_i_r___sense___task_8py_source.html)
-9. IMU Driver: [class](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/class_i_m_u___tracker_1_1_i_m_u___tracker.html) | [source](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/_i_m_u___tracker_8py_source.html)
-10. Ultrasonic Driver: [class](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/class_ultra___sense___task_1_1_ultra___sense___task.html) | [source](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/_ultra___sense___task_8py_source.html)
-11. XY Integrator: [class](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/class_x_y___tracking_1_1_x_y___tracking.html) | [source](file:///C:/Users/evan/Desktop/Cal%20Poly%202024-25/ME405/Term%20Project/doxygen%20test/html/_x_y___tracking_8py_source.html)
+1. Main.py: [class](https://cal-poly-me405-mecha31.github.io/class_m_e405_01_term_01_project_01v5_1_1_main.html) | [source](https://cal-poly-me405-mecha31.github.io/m_e405_01_term_01_project_01v5_8py_source.html)
+2. Com Task: [class](https://cal-poly-me405-mecha31.github.io/class_com___task_1_1_com___task.html) | [source](https://cal-poly-me405-mecha31.github.io/com___task_8py_source.html)
+3. Controller: [class](https://cal-poly-me405-mecha31.github.io/class_controller_1_1_controller.html) | [source](https://cal-poly-me405-mecha31.github.io/controller_8py_source.html)
+4. PID: [class](https://cal-poly-me405-mecha31.github.io/class_p_i_d_1_1_p_i_d.html) | [source](https://cal-poly-me405-mecha31.github.io/p_i_d_8py_source.html)
+5. Motor: [class](https://cal-poly-me405-mecha31.github.io/class_motor_1_1_motor.html) | [source](https://cal-poly-me405-mecha31.github.io/motor_8py_source.html)
+6. Encoder: [class](https://cal-poly-me405-mecha31.github.io/class_encoder_1_1_encoder.html) | [source](https://cal-poly-me405-mecha31.github.io/encoder_8py_source.html)
+7. Motor Controller: [class](https://cal-poly-me405-mecha31.github.io/class_motor___task_1_1_motor___task.html) | [source](https://cal-poly-me405-mecha31.github.io/motor___task_8py_source.html)
+8. IR Driver: [class](https://cal-poly-me405-mecha31.github.io/class_i_r___sense___task_1_1_i_r___sense___task.html) | [source](https://cal-poly-me405-mecha31.github.io/i_r___sense___task_8py_source.html)
+9. IMU Driver: [class](https://cal-poly-me405-mecha31.github.io/class_i_m_u___tracker_1_1_i_m_u___tracker.html) | [source](https://cal-poly-me405-mecha31.github.io/i_m_u___tracker_8py_source.html)
+10. Ultrasonic Driver: [class](https://cal-poly-me405-mecha31.github.io/class_ultra___sense___task_1_1_ultra___sense___task.html) | [source](https://cal-poly-me405-mecha31.github.io/ultra___sense___task_8py_source.html)
+11. XY Integrator: [class](https://cal-poly-me405-mecha31.github.io/class_x_y___tracking_1_1_x_y___tracking.html) | [source](https://cal-poly-me405-mecha31.github.io/x_y___tracking_8py_source.html)
 
 ### Class Descriptions for Context:
 
@@ -60,13 +66,24 @@ We have two goals with this page.  First, we wish to provide a high-level overvi
 11.  XY Integrator - A task to continuously integrate velocity into actual cartesian coordinates.  The XY coordinates
      are used for error handling.
 
+### Wiring Diagram:
+
+<img src="https://cal-poly-me405-mecha31.github.io/Wiring%20Diagram">
 
 ### Overall Task Diagram:
+
+<img src="https://cal-poly-me405-mecha31.github.io/Task%20Diagram">
 
 ### State Space Diagrams:
 
 #### Top Level Control:
 
+<img src="https://cal-poly-me405-mecha31.github.io/Top%20Level%20Diagram">
+
 #### Course Controller:
 
+<img src="https://cal-poly-me405-mecha31.github.io/Controller%20Diagram">
+
 #### Sensor Driver (Abstract):
+
+<img src="https://cal-poly-me405-mecha31.github.io/Sensor%20Diagram">

@@ -6,8 +6,13 @@ import cotask
 import struct
 from gc import collect
 
-class Ultra_Sense_Task: # driver to read from the IR sensors
+## Ultra_Sense_Task provides a driver to track the various ultrasonic sensors.  The ultrasonic sensors are the HC-SR04 model.
+#  The steps to read from each sensor are 1) start with the trigger pin low 2) drive the trigger pin high briefly 3) enable 
+#  the  echo pin callback  4) wait for the pin to be driven low by the sensor 6) record the time.  
+#  Every call to the run() function, we read, at most, one sensor, if it is available.
+class Ultra_Sense_Task:
 
+	## Number of ultrasonic sensor read by this object
 	SENSOR_COUNT = 2
 
 	def __init__(self, dataQueue, ctrlState, distance):
@@ -20,12 +25,15 @@ class Ultra_Sense_Task: # driver to read from the IR sensors
 
 		self.state = 0
 
-	def callback(self, pin): # function is called when the IR sensor drives the pin high to communicate the reflectance
-		self.rawData[self.index] = ticks_diff(ticks_us(), self.timeStamp) # raw data is stored here to avoid floating point calcs in the callback
+
+	## callback(pin) defines the callback when the ultrasonic echo sensor pin is driven low by the sensor to indicate the distance.  Data is stored directly in the 
+	#  rawData variable because floating point math is forbidden in callbacks
+	def callback(self, pin): 
+		self.rawData[self.index] = ticks_diff(ticks_us(), self.timeStamp) 
 
 		if Ultra_Sense_Task.SENSOR_COUNT > 1:
 
-			self.interruptPins[self.index].disable() # disable the current pin so it doesn't get called again
+			self.interruptPins[self.index].disable() 
 
 			if self.index >= Ultra_Sense_Task.SENSOR_COUNT-1:
 				self.index = 0 # reset index
@@ -36,7 +44,9 @@ class Ultra_Sense_Task: # driver to read from the IR sensors
 
 			self.index = -1
 
-
+	## run() runs the next state of the state machine.  It is intended to be called by the scheduler with a period of 10ms.
+	#  Once in the reading state, every call to run() does the following things: 1) enable the callback for the 
+	#  current sensor 3) pulse the trigger pin 4) update distance
 	def run(self):
 
 		while True:
@@ -130,3 +140,30 @@ class Ultra_Sense_Task: # driver to read from the IR sensors
 				self.state = 0
 
 			yield self.state
+
+	## @var state
+    #  Next state to be run by the state machine.  0 = initialization, 1 = waiting, 2 = reset, 3 = sensing
+
+    ## @var index
+    #  Index in list of the current sensor being read from the array
+
+    ## @var echoNums
+    #  List of the pin identifier objects associated with each echo pin
+
+    ## @var rawData
+    #  List of most recent measurement of reflectance directly from the sensor, expressed as microseconds of delay
+
+    ## @var interruptPins
+    #  List of ExtInt objects for enabling and disabling the interrupt callabacks
+
+    ## @var trigNums
+    #  List of the pin identifier objects associated with each trigger pin
+
+    ## @var trigPins
+    #  List of Pin objects associated with each trigger pin
+
+    ## @var prevIndex
+    #  The index of the last sensor that was read, to identify when the callback has completed its reading
+
+    ## @var timeStemp
+    #  Time stamp for determining if the sensor has timed out

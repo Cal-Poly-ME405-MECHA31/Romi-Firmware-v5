@@ -49,10 +49,8 @@ class IR_Sense_Task:
 			if self.state == 0: # state 0 is only run once.  State 0 initializes hardware objects
 
 				self.pinNums = [Pin.cpu.C10, Pin.cpu.C12, Pin.cpu.A15, Pin.cpu.H0, Pin.cpu.H1, Pin.cpu.C3, Pin.cpu.C11]
-				self.pinLines = [10, 12, 15, 0, 1, 3, 11]
 				self.referenced = 0
 				self.index = 0
-				self.index2 = int(len(self.pinNums)/2)
 
 				self.rawData = []
 				for i in range(len(self.pinNums)):
@@ -75,9 +73,7 @@ class IR_Sense_Task:
 			elif self.state == 2: # state 2 is run every time the sensors are turned off and on again
 
 				self.index = 0
-				self.index2 = int(len(self.pinNums)/2)
 				self.prevIndex = -1
-				self.prevIndex2 = -1
 				self.rawData = []
 				self.reflectance = []
 				self.whiteRef = []
@@ -110,7 +106,6 @@ class IR_Sense_Task:
 						self.pinList[self.index+1].high()
 
 					self.timeStamp = ticks_us()
-					self.line1 = self.pinLines[self.index]
 					self.interruptPins[self.index].enable() # enable the callback when the sensor drives the line high again
 
 					self.pinList[self.index].init(Pin.IN) # trigger the current pin by disconnecting the pin
@@ -186,5 +181,44 @@ class IR_Sense_Task:
 
 			yield self.state
 
-	## @var leftMotor
-    #  Motor object for setting left motor parameters
+	## @var state
+    #  Next state to be run by the state machine.  0 = initialization, 1 = waiting, 2 = reset, 3 = sensing
+
+    ## @var index
+    #  Index in list of the current sensor being read from the array
+
+    ## @var pinNums
+    #  List of the pin identifier objects associated with each IR sensor
+
+    ## @var referenced
+    #  Flag to indicate the current state of IR sensor referencing.  0 = no reference, 1 = white reference only, 2 = both references set
+
+    ## @var rawData
+    #  List of most recent measurement of reflectance directly from the sensor, expressed as microseconds of delay
+
+    ## @var pinList
+    #  List of pin objects for toggling the pins from input to output
+
+    ## @var interruptPins
+    #  List of ExtInt objects for enabling and disabling the interrupt callabacks
+
+    ## @var prevIndex
+    #  The index of the last sensor that was read, to identify when the callback has completed its reading
+
+    ## @var reflectance
+    #  List of reflectance measurements scaled by the white and black references between 0 and 100
+
+    ## @var whiteRef
+    #  List of direct reflectance measurements taken over a white reference
+
+    ## @var blackRef
+    #  List of direct reflectance measurements taken over a black reference
+
+    ## @var strength_list
+    #  List of last several strength values that will be averaged together
+
+    ## @var strength_index
+    #  Current index to be set in the strength_list list
+
+    ## @var timeStemp
+    #  Time stamp for determining if the sensor has timed out
